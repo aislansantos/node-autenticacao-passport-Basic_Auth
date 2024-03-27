@@ -3,7 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import passport from 'passport'; // temos de inicalizar a lib no nosso server
-import apiRoutes from './routes/routes';
+import apiRoutes  from "./routes/routes"
 
 dotenv.config();
 
