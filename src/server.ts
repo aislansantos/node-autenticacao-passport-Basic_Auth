@@ -3,7 +3,7 @@ import path from 'path';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import passport from 'passport'; // temos de inicalizar a lib no nosso server
-import apiRoutes  from "./routes/routes"
+import apiRoutes from "./routes/routes"
 
 dotenv.config();
 
@@ -16,7 +16,6 @@ server.use(express.urlencoded({ extended: true }));
 
 server.use(passport.initialize()) // temos de inicalizar a lib no nosso server
 
-
 server.use(apiRoutes);
 
 server.use((req: Request, res: Response) => {
@@ -25,9 +24,11 @@ server.use((req: Request, res: Response) => {
 });
 
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-    res.status(400); // Bad Request
-    console.log(err);
-    res.json({ error: 'Ocorreu algum erro.' });
+    if (err.status && err.message) {
+        return res.status(err.status).json({ error: err.message });
+    } else {
+        return res.status(400).json({ error: "Ocorreu algum erro." }); // Bad Request
+    }
 }
 server.use(errorHandler);
 

@@ -28,24 +28,7 @@ export const register = async (req: Request, res: Response) => {
 
 
 export const login = async (req: Request, res: Response) => {
-    if (req.body.email && req.body.password) {
-        let email: string = req.body.email;
-        let password: string = req.body.password;
-
-
-        let user = await User.findOne({
-            where: {
-                email,
-                password
-            }
-        });
-
-        if (user) {
-            return res.json({ status: true })
-        }
-    }
-
-    return res.json({ status: false })
+    return res.json({ status: true, user: req.user });
 }
 
 
@@ -54,6 +37,6 @@ export const list = async (req: Request, res: Response) => {
     let list: string[] = [];
 
     users.forEach((item => list.push(item.email)))
-    
+
     return res.json({ list })
 }
